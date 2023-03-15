@@ -24,7 +24,7 @@ pipeline {
         stage('Deploy to Render') {
             steps {
                 sh '''
-                   curl -X GET https://week-1-ip.onrender.com
+                   curl -X GET https://api.render.com/deploy/srv-cg91cbt269vfa5frducg?key=FmdAPk4DQZ4
                    '''
             }
         }
