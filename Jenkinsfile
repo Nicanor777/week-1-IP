@@ -49,4 +49,11 @@ pipeline {
             }
         }
     }
+    post {
+            failure {
+                mail to: 'kahoraderrick@gmail.com',
+                subject:"FAILURE: ${currentBuild.fullDisplayName}",
+                body: "Test Complete Build failed."
+            }
+        }
 }
