@@ -14,7 +14,7 @@ describe('Photos', function(){
 
     it('should list ALL photos on / GET', function(done){
         this.timeout(60000);
-        chai.request(server)
+        chai.request('http://localhost:3000')
         .get('/')
         .end(function(err,res){
             res.should.have.status(200);
