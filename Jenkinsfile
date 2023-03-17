@@ -14,6 +14,14 @@ pipeline {
                 git url: 'https://github.com/Nicanor777/week-1-IP.git', branch: 'master'
             }
         }
+        stage('Get Latest Commit') {
+            steps {
+                sh '''
+                   export COMMIT=$(git log --oneline | awk '{print $1}' | head -n 1)
+                   echo $COMMIT
+                   '''
+            }
+        }
         stage('Install dependencies') {
             steps {
                 sh '''
@@ -21,10 +29,17 @@ pipeline {
                    '''
             }
         }
+        stage('Run Tests') {
+            steps {
+                sh '''
+                npm test
+                '''
+            }
+        }
         stage('Deploy to Render') {
             steps {
                 sh '''
-                   curl -X GET https://api.render.com/deploy/srv-cg91cbt269vfa5frducg?key=FmdAPk4DQZ4
+                   curl -X POST https://api.render.com/deploy/srv-cg91cbt269vfa5frducg?key=$COMMIT
                    '''
             }
         }
