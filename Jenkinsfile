@@ -50,10 +50,15 @@ pipeline {
         }
     }
     post {
+            success {
+                slackSend color: "good", message: "Build ${env.BUILD_NUMBER} of ${env.JOB_NAME} Succeeded. Deployed at ${LIVE_SITE}"
+            }
             failure {
                 mail to: 'kahoraderrick@gmail.com',
                 subject:"FAILURE: ${currentBuild.fullDisplayName}",
                 body: "Test Complete Build failed."
+                slackSend color: "danger", message: "Build ${env.BUILD_NUMBER} of ${env.JOB_NAME} failed. See ${env.BUILD_URL} for details."
+
             }
         }
 }
